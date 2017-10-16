@@ -9,7 +9,6 @@ local pathLoad = { "shared/", "server/", "client/" }
 -- Helper functions
 local function loadFolder( path, realm )
 	if realm == 2 and not SERVER then return end
-	if realm == 3 and not CLIENT then return end
 
 	local files 	 = file.Find( pathRoot .. path .. "*.lua", "LUA" )
 	local _, folders = file.Find( pathRoot .. path .. "*", "LUA" )
@@ -18,7 +17,7 @@ local function loadFolder( path, realm )
 		local fullPath = pathRoot .. path .. v
 
 		if realm == 1 or realm == 3 then AddCSLuaFile( fullPath ) end
-		include( fullPath )
+		if realm == 1 or ( realm == 2 and SERVER ) or ( realm == 3 and CLIENT ) then include( fullPath ) end
 
 		impact.Print( fullPath )
 	end
@@ -42,9 +41,13 @@ function impact.Load()
 	impact.Print( "Load took " .. elapsedUS .. "us" )
 
 	hook.Call( "ImpactPostLoad" )
+
+	hook.Add( "InitPostEntity", "Impact InitPostEntity", function() IMPACT_POST_ENTITY = true hook.Call( "ImpactPostEntity" ) end )
+	if IMPACT_POST_ENTITY then hook.Call( "ImpactPostEntity" ) end
 end
 
 function impact.Unload()
+	hook.Remove( "InitPostEntity", "Impact InitPostEntity" )
 	hook.Call( "ImpactUnload" )
 	impact.Print( "Unloaded" )
 end
@@ -56,3 +59,4 @@ end
 
 -- Initialize
 impact.Load()
+

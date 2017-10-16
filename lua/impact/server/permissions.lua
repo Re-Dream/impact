@@ -77,11 +77,13 @@ function impact.Flag( ent, ply, flag, ... )
 
 	if not owner then return false end
 
-	if not impact.Friends[ owner ] then return false end
-	if not impact.Friends[ owner ][ steamID ] then return false end
+	local ownID = impact.SteamID( owner )
 
-	if flag == impact.Flags.Physgun and player and ply:GetInfoNum( "impact_playergrab", 0 ) > 0 and ownerPly:GetInfoNum( "impact_playergrab", 0 ) > 0 and bit_band( impact.Friends[ owner ][ steamID ].Flags or 0, impact.Flags.PlayerGrab ) == impact.Flags.PlayerGrab then return true end
-	if bit_band( impact.Friends[ owner ][ steamID ].Flags or 0, flag ) == flag then return true end
+	if not impact.Friends[ ownID ] then return false end
+	if not impact.Friends[ ownID ][ steamID ] then return false end
+
+	if flag == impact.Flags.Physgun and player and ply:GetInfoNum( "impact_playergrab", 0 ) > 0 and ownerPly:GetInfoNum( "impact_playergrab", 0 ) > 0 and bit_band( impact.Friends[ ownID ][ steamID ].Flags or 0, impact.Flags.PlayerGrab ) == impact.Flags.PlayerGrab then return true end
+	if bit_band( impact.Friends[ ownID ][ steamID ].Flags or 0, flag ) == flag then return true end
 
 	return false
 end

@@ -86,7 +86,7 @@ regHook( "PhysgunDrop", function( ply, ent )
 end )
 
 regHook( "EntityTakeDamage", function( ent, dmg )
-	
+
 end )
 
 regHook( "CanProperty", function( ply, property, ent )

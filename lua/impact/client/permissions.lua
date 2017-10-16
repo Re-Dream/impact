@@ -76,6 +76,7 @@ end
 function impact.Assign( ply )
 	if not impact.IsPlayer( ply ) then return end
 	if ply:GetFriendStatus() ~= "friend" then return end
+	if impact.Friends[ impact.SteamID( ply ) ] then return end
 
 	impact.Print( "Granted '" .. ply:Nick() .. "' default friend permissions" )
 
@@ -94,6 +95,8 @@ end
 -- Netfunctions
 
 impact.Net.Add( "Synchronization Request", function()
+	for _, v in pairs( player.GetAll() ) do impact.Assign( v ) end
+	
 	impact.UpdateNicks()
 	impact.SynchronizeFriends()
 end )
@@ -104,4 +107,21 @@ impact.Net.Add( "Player InitialSpawn", function( steamID )
 
 	impact.Players[ steamID ] = ply
 	impact.Players[ ply ] = steamID
+end )
+
+
+-- Hooks
+
+hook.Add( "ImpactPostEntity", "Impact CL Permissions ImpactPostEntity", function()
+	for _, v in pairs( player.GetAll() ) do 
+		impact.Assign( v )
+		impact.SteamID( v )
+	end
+
+	impact.Print( "Built cache" )
+end )
+
+hook.Add( "ImpactUnload", "Impact CL Permissions ImpactUnload", function()
+	hook.Remove( "ImpactPostEntity", "Impact CL Permissions ImpactPostEntity" )
+    hook.Remove( "ImpactUnload", "Impact Inject ImpactUnload" )
 end )

@@ -47,6 +47,8 @@ function impact.IsPlayer( ply )
 end
 
 function impact.Player( steamID )
+	if not steamID then return nil end
+	
 	if impact.Players[ steamID ] == nil then
 		local ply = player.GetBySteamID( steamID )
 

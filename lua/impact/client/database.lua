@@ -18,7 +18,11 @@ function impact.UpdateNicks()
 		local ply = impact.Player( k )
 
 		if impact.IsPlayer( ply ) then
-			impact.Friends[ k ].Name = ply:Nick()
+			local nick =  ply:Nick()
+
+			if nick ~= "unconnected" then
+				impact.Friends[ k ].Name = nick
+			end
 		end
 	end
 
