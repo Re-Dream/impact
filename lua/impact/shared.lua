@@ -1,3 +1,4 @@
+--- module loader, Re-Dream
 -- Global
 impact.Version = 201710.0
 
@@ -22,7 +23,7 @@ local function loadFolder( path, realm )
 		impact.Print( fullPath )
 	end
 
-	for _, v in pairs( folders ) do loadFolder( v, realm ) end
+	for _, v in pairs( folders ) do if v ~= "disabled" then loadFolder( path .. v .. "/", realm ) end end
 end
 
 -- Functions

@@ -1,3 +1,4 @@
+--- debug functions, Re-Dream
 -- Variables
 local clrAccent = Color( 0, 148, 255 )
 local clrInfo	= Color( 244, 244, 244 )
