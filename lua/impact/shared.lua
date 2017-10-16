@@ -17,7 +17,7 @@ local function loadFolder( path, realm )
 	for _, v in pairs( files ) do
 		local fullPath = pathRoot .. path .. v
 
-		if realm == 1 then AddCSLuaFile( fullPath ) end
+		if realm == 1 or realm == 3 then AddCSLuaFile( fullPath ) end
 		include( fullPath )
 
 		impact.Print( fullPath )

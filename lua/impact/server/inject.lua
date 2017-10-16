@@ -86,23 +86,7 @@ regHook( "PhysgunDrop", function( ply, ent )
 end )
 
 regHook( "EntityTakeDamage", function( ent, dmg )
-    local vec = Vector( 0 )
-    local att = dmg:GetAttacker()
-          att = att:GetClass() ~= "entityflame" and att or ( ent.ImpactDamageSource or att ) -- flame fix
-
-    local inf = dmg:GetInflictor()
-
-    local ply = att:IsPlayer() and att or ( impact.IsPlayer( impact.Owner( att ) ) or ( impact.IsPlayer( impact.Owner( inf ) ) or ( att:IsWorld() and att ) ) )
-    local own = impact.IsPlayer( impact.Owner( ent ) ) or ( ent == att and ent )
-
-    if not ply or ( not own and ply and not ply:IsWorld() ) or not impact.Flag( ent, ply, impact.Flags.Damage ) then
-        dmg:ScaleDamage( 0 )
-        dmg:SetDamageForce( vec )
-
-        if dmg:IsExplosionDamage() then return true end
-    else
-        ent.ImpactDamageSource = ply
-    end
+	
 end )
 
 regHook( "CanProperty", function( ply, property, ent )
