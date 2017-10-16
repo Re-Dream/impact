@@ -77,6 +77,8 @@ function impact.Assign( ply )
 	if not impact.IsPlayer( ply ) then return end
 	if ply:GetFriendStatus() ~= "friend" then return end
 
+	impact.Print( "Granted '" .. ply:Nick() .. "' default friend permissions" )
+
 	impact.Friends[ impact.SteamID( ply ) ] = { Flags = impact.FriendDefault:GetInt(), Name = ply:Nick() }
 	
 	impact.SaveFriends()

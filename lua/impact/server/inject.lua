@@ -39,7 +39,7 @@ undoFinish = undoFinish or undo.Finish
 function undo.Finish()
 	if impact.IsPlayer( undoAct.Player ) then
 		local steamID = undoAct.Player:SteamID()
-		for _, v in pairs( undoAct.Entities ) do impact.Owner( v, steamID ) end
+		for k, v in pairs( undoAct.Entities ) do impact.Owner( k, steamID ) end
 	end
 
 	undoFinish()

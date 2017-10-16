@@ -37,9 +37,10 @@ function impact.Flag( ent, ply, flag, ... )
 	local ownerPly		= owner and impact.Player( owner ) or false
 	local worldSpawn 	= ent:IsWorld()
 	local player 		= impact.IsPlayer( ent )
-	local steamID		= impact.SteamID( ply )
+	local steamID		= impact.IsPlayer( ply ) and impact.SteamID( ply ) or false
 
 	-- TODO In this order; ( intentionally left in code for reference )
+	-- World is god - OK
 	-- Block tool on player - OK
 	-- Blocked tools (note: bypass perm?) - OK
 	-- Allow tool on worldspawn - OK
@@ -53,6 +54,8 @@ function impact.Flag( ent, ply, flag, ... )
 	-- Playergrab check - OK
 	-- Allow if flag met - OK
 	-- Disallow all else - OK
+
+	if not impact.IsPlayer( ply ) then return true end
 
 	if flag == impact.Flags.Tool then
 		if player then return false end

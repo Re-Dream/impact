@@ -33,8 +33,9 @@ function impact.Load()
 	local startTime = SysTime()
 	impact.Print( "Loading modules" )
 
-	for k, v in pairs( pathLoad )
-		loadFolder( pathRoot .. v, k )
+	for k, v in pairs( pathLoad ) do
+		impact.Print( "Loading realm " .. k .. " '" .. v .. "'" )
+		loadFolder( v, k )
 	end
 
 	local elapsedUS = math.ceil( ( SysTime() - startTime ) * 1000000 )
@@ -46,6 +47,11 @@ end
 function impact.Unload()
 	hook.Call( "ImpactUnload" )
 	impact.Print( "Unloaded" )
+end
+
+function impact.Reload()
+	impact.Unload()
+	impact.Load()
 end
 
 -- Initialize

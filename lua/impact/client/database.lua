@@ -21,6 +21,8 @@ function impact.UpdateNicks()
 			impact.Friends[ k ].Name = ply:Nick()
 		end
 	end
+
+	impact.Print( "Nicknames updated" )
 end
 
 --- Saves friends
@@ -32,11 +34,13 @@ function impact.SaveFriends()
 	end
 
 	cookie.Set( "ImpactFriends", tj( impact.Friends ) )
+	impact.Print( "Friends saved" )
 end
 
 --- Loads friends
 function impact.LoadFriends()
     impact.Friends = jt( cookie.GetString( "ImpactFriends", "{}" ) )
+	impact.Print( "Friends loaded" )
 end
 
 impact.LoadFriends()
