@@ -23,6 +23,7 @@ for k, v in pairs( impact.Flags ) do impact.Flags[ v ] = k end
 
 -- Helper functions
 local function getOwner( ent )
+	if ent:IsPlayer() then return ent end
 	return impact.Player( ent:GetNWString( "Impact Owner", nil ) )
 end
 
